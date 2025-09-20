@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>স্বপ্ননীড় সোসাইটি</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="welcome" id="welcome">
+    <img src="logo.png" alt="Logo" class="logo">
+    <h1>স্বপ্ননীড় সোসাইটি</h1>
+    <p>আমাদের সমাজ উন্নয়নের জন্য বিভিন্ন কর্মসূচি চলছে।</p>
+    <button id="goLogin">Login</button>
+  </div>
+
+  <div class="login hidden" id="login">
+    <h2>Login</h2>
+    <input id="code" placeholder="CODE">
+    <div class="passBox">
+      <input id="pass" type="password" placeholder="PASS">
+      <button id="togglePass">👁</button>
+    </div>
+    <button id="loginBtn">Submit</button>
+    <p id="msg" class="msg"></p>
+    <button id="backHome1">Back</button>
+  </div>
+
+  <div class="result hidden" id="result">
+    <img src="logo.png" alt="Logo" class="logoCard">
+    <h2>Welcome, <span id="v_name"></span> 🎉</h2>
+    <p>CODE: <span id="v_code"></span></p>
+    <p>NID: <span id="v_nid"></span></p>
+    <p>Phone: <span id="v_phone"></span></p>
+    <p>Installment: <span id="v_inst"></span></p>
+    <p>Total Pay: <span id="v_pay"></span></p>
+    <button id="download">Download PDF</button>
+    <button id="logout">Logout</button>
+    <button id="backHome2">Back</button>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

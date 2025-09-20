@@ -1,0 +1,13 @@
+body {
+  font-family: 'Noto Sans Bengali', sans-serif;
+  text-align: center;
+  background: #f5f6fa;
+  margin: 0;
+  padding: 0;
+}
+.hidden { display: none; }
+.logo { width: 120px; margin: 20px auto; display: block; }
+.logoCard { width: 80px; opacity: 0.3; position: absolute; top: 20px; right: 20px; }
+button { margin: 10px; padding: 10px 20px; border: none; background: #3498db; color: white; border-radius: 5px; cursor: pointer; }
+.msg.err { color: red; }
+.msg.ok { color: green; }
