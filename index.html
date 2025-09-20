@@ -1,47 +1,302 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>স্বপ্ননীড় সোসাইটি</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <title>Dream Land — Welcome → Rules → Loan Rules → Login → Info</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root { --bg:#163754; --card:#0f2a41; }
+    *{ box-sizing:border-box }
+    body{
+      margin:0;background:var(--bg);color:#fff;min-height:100vh;
+      display:grid;place-items:center;font-family:system-ui, Segoe UI, Arial
+    }
+    .card{
+      width:560px;max-width:94vw;background:var(--card);
+      border:1px solid #184261;padding:22px;border-radius:16px;
+      box-shadow:0 14px 40px rgba(0,0,0,.25)
+    }
+    h1,h2{margin:0 0 12px;text-align:center}
+    p{margin:0 0 10px}
+    .hidden{display:none !important;}
+    .logo{width:150px;height:150px;object-fit:contain;display:block;margin:0 auto 14px}
+    .grid-btn{display:grid;gap:12px;margin:18px 0}
+
+    button{
+      width:100%;padding:12px;border:0;border-radius:10px;color:#fff;
+      font-size:16px;cursor:pointer;font-weight:600;
+    }
+    button:hover{filter:brightness(.9)}
+    button:disabled{opacity:.6;cursor:not-allowed}
+
+    .btn-member   { background:#4CAF50; }
+    .btn-loan     { background:#2196F3; }
+    .btn-login    { background:#FF9800; }
+    .btn-committee{ background:#9C27B0; }
+    .btn-pdf      { background:#f44336; }
+
+    a{text-decoration:none}
+    label{display:block;margin:8px 0 4px}
+    input{
+      width:100%;height:44px;line-height:44px;padding:0 14px;
+      border-radius:8px;border:1px solid #2b5576;background:#0b2336;color:#eef
+    }
+    .msg{min-height:1.2em;margin:10px 0;font-weight:700}
+    .ok{color:#4ad97f}.err{color:#ff6b6b}
+
+    .grid{
+      display:grid;grid-template-columns:140px 1fr;gap:8px 10px;margin-top:10px
+    }
+    .row{position:relative}
+    .row input{padding-right:46px}
+    .eye{
+      position:absolute;right:10px;top:50%;transform:translateY(-50%);
+      width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;
+      background:transparent;border:0;color:#bcd;cursor:pointer
+    }
+    .link{color:#9ad6ff;cursor:pointer;text-align:center;display:block;margin-top:10px}
+
+    .article{margin-top:16px;text-align:left;line-height:1.6}
+    ul{margin:8px 0 0 18px}
+
+    .notice{
+      background:#fff3cd;color:#533f03;border:1px solid #ffecb5;
+      border-radius:12px;padding:14px 16px;box-shadow:0 6px 18px rgba(0,0,0,.15);
+      margin-bottom:12px;
+    }
+    .notice h3{margin:0 0 8px;font-size:18px;text-align:left;display:flex;align-items:center;gap:8px;}
+    .notice ul{margin:8px 0 0 22px;line-height:1.55}
+
+    #successAnim{ text-align:center; animation:fadeIn .5s ease; }
+    .anim-box{ width:120px;height:120px;margin:40px auto 14px;position:relative; }
+    .circle{
+      width:120px;height:120px;border-radius:50%;background:#4CAF50;
+      display:flex;align-items:center;justify-content:center;position:absolute;inset:0;
+      animation:popIn .6s ease;
+    }
+    .check{
+      width:40px;height:20px;border-left:5px solid #fff;border-bottom:5px solid #fff;
+      transform:rotate(-45deg);margin:auto;animation:drawCheck .8s ease forwards;
+    }
+    #welcomeName{
+      font-size:22px;font-weight:800;margin-top:6px;
+      font-family: "Hind Siliguri", system-ui, sans-serif;
+      animation:zoomIn 1s ease;
+    }
+    @keyframes popIn{from{transform:scale(0);opacity:0} to{transform:scale(1);opacity:1}}
+    @keyframes drawCheck{from{width:0;height:0} to{width:40px;height:20px}}
+    @keyframes zoomIn{from{transform:scale(.5);opacity:0} to{transform:scale(1);opacity:1}}
+    @keyframes fadeIn{from{opacity:0} to{opacity:1}}
+  </style>
 </head>
 <body>
-  <div class="welcome" id="welcome">
-    <img src="logo.png" alt="Logo" class="logo">
-    <h1>স্বপ্ননীড় সোসাইটি</h1>
-    <p>আমাদের সমাজ উন্নয়নের জন্য বিভিন্ন কর্মসূচি চলছে।</p>
-    <button id="goLogin">Login</button>
-  </div>
 
-  <div class="login hidden" id="login">
-    <h2>Login</h2>
-    <input id="code" placeholder="CODE">
-    <div class="passBox">
-      <input id="pass" type="password" placeholder="PASS">
-      <button id="togglePass">👁</button>
+  <!-- Welcome -->
+  <div id="welcome" class="card">
+    <img class="logo" src="./logo.png"
+         onerror="this.onerror=null;this.src='https://drive.google.com/uc?export=view&id=1EGbLTY58jMndZr54waGm7RjeqcX5SYsP';"
+         alt="Logo">
+
+    <h1>স্বাগতম!</h1>
+    <p>“স্বপ্ন নীড় সোসাইটি”-তে আপনাকে আন্তরিক স্বাগতম 🌸</p>
+
+    <div class="grid-btn">
+      <button id="showRules" class="btn-member">📥 ডাউনলোড সদস্য আবেদন ফর্ম</button>
+      <button id="showLoanRules" class="btn-loan">📥 ঋণ প্রদানের নিয়মাবলী</button>
+      <button id="goLogin" class="btn-login">🔑 সদস্য লগ ইন</button>
+      <button id="goCommittees" class="btn-committee">👥 আমাদের কমিটি</button>
     </div>
-    <button id="loginBtn">Submit</button>
-    <p id="msg" class="msg"></p>
-    <button id="backHome1">Back</button>
+
+    <!-- ✅ সাম্প্রতিক আর্টিকেল -->
+    <div class="article">
+      <h2>📰 সাম্প্রতিক আর্টিকেল</h2>
+      <p>👉 আমাদের সমাজ উন্নয়নের জন্য বিভিন্ন কর্মসূচি চলছে।</p>
+      <p>👉 ঋণ প্রদানের নিয়মাবলী শীঘ্রই আপডেট করা হবে।</p>
+      <p>👉 নতুন সদস্য সংগ্রহ অভিযান শুরু হয়েছে।</p>
+    </div>
   </div>
 
-  <div class="result hidden" id="result">
-    <img src="logo.png" alt="Logo" class="logoCard">
-    <h2>Welcome, <span id="v_name"></span> 🎉</h2>
-    <p>CODE: <span id="v_code"></span></p>
-    <p>NID: <span id="v_nid"></span></p>
-    <p>Phone: <span id="v_phone"></span></p>
-    <p>Installment: <span id="v_inst"></span></p>
-    <p>Total Pay: <span id="v_pay"></span></p>
-    <button id="download">Download PDF</button>
-    <button id="logout">Logout</button>
-    <button id="backHome2">Back</button>
+  <!-- Member Rules -->
+  <div id="rules" class="card hidden">
+    <div class="notice">
+      <h3>⚠️ সদস্য হওয়ার নিয়মাবলী</h3>
+      <ul>
+        <li>২ কপি ছবি, এনআইডি কপি ও ২০০ টাকা ফি জমা দিতে হবে।</li>
+        <li>প্রতি মাসের ১৫ তারিখে সাবস্ক্রিপশন ফি দিতে হবে, না দিলে ৫০০ টাকা জরিমানা।</li>
+        <li>পরপর ৩ মাস কিস্তি না দিলে সদস্যপদ বাতিল হতে পারে।</li>
+        <li>শেয়ার বাতিল করতে হলে ৩ মাস আগে লিখিত আবেদন করতে হবে।</li>
+        <li>বের হওয়ার সময় মোট টাকার ৫% কর্তন করা হবে।</li>
+        <li>৫ বছরের বেশি মেয়াদে ইন্টারেস্ট প্রদান করা হবে না।</li>
+      </ul>
+    </div>
+    <a href="forms/member_form.pdf" target="_blank">
+      <button class="btn-member">⬇️ ফর্ম ডাউনলোড করুন</button>
+    </a>
+    <span class="link" id="backHomeRules">← হোমে ফিরুন</span>
   </div>
 
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <!-- Loan Rules -->
+  <div id="loanRules" class="card hidden">
+    <div class="notice">
+      <h3>💰 ঋণ প্রদানের নিয়মাবলী</h3>
+      <ul>
+        <li>শুধুমাত্র সক্রিয় সদস্যরাই ঋণ আবেদন করতে পারবেন।</li>
+        <li>ঋণ গ্রহণের জন্য কমপক্ষে ৬ মাসের সদস্যপদ থাকতে হবে।</li>
+        <li>ঋণ সর্বোচ্চ শেয়ারের দ্বিগুণ পর্যন্ত নেওয়া যাবে।</li>
+        <li>ঋণের কিস্তি মাসিক ভিত্তিতে শোধ করতে হবে।</li>
+        <li>কোনো কিস্তি মিস করলে অতিরিক্ত ৫% জরিমানা যোগ হবে।</li>
+        <li>ঋণ পরিশোধ না করলে সংগঠনের সিদ্ধান্ত অনুযায়ী আইনগত ব্যবস্থা নেওয়া হবে।</li>
+      </ul>
+    </div>
+    <a href="forms/loan_form.pdf" target="_blank">
+      <button class="btn-loan">⬇️ ঋণ ফর্ম ডাউনলোড করুন</button>
+    </a>
+    <span class="link" id="backHomeLoanRules">← হোমে ফিরুন</span>
+  </div>
+
+  <!-- Login -->
+  <div id="login" class="card hidden">
+    <h2>লগইন (CODE + PASS)</h2>
+    <label>CODE</label>
+    <input id="code" placeholder="User ID">
+    <label>PASS</label>
+    <div class="row">
+      <input id="pass" type="password" placeholder="Password">
+      <button class="eye" id="togglePass">👁</button>
+    </div>
+    <button id="loginBtn" class="btn-login">লগইন</button>
+    <div id="msg" class="msg"></div>
+    <span class="link" id="backHome1">← হোমে ফিরুন</span>
+  </div>
+
+  <!-- Success -->
+  <div id="successAnim" class="hidden">
+    <div class="anim-box">
+      <div class="circle"><div class="check"></div></div>
+    </div>
+    <div id="welcomeName">স্বাগতম!</div>
+  </div>
+
+  <!-- Result -->
+  <div id="result" class="card hidden">
+    <h2>আপনার তথ্য</h2>
+    <div class="grid">
+      <div>CODE</div><div id="v_code"></div>
+      <div>NAME</div><div id="v_name"></div>
+      <div>NID NO</div><div id="v_nid"></div>
+      <div>PHONE</div><div id="v_phone"></div>
+      <div>INSTALMENT</div><div id="v_inst"></div>
+      <div>TOTAL PAY</div><div id="v_pay"></div>
+    </div>
+    <button id="downloadPdf" class="btn-pdf">📄 ডাউনলোড মেম্বার কার্ড</button>
+    <button id="logout" class="btn-login">লগআউট</button>
+    <span class="link" id="backHome2">← হোমে ফিরুন</span>
+  </div>
+
+  <!-- Committees -->
+  <div id="committees" class="card hidden">
+    <h2>আমাদের কমিটি</h2>
+    <ul>
+      <li>সভাপতি: জনাব অমুক</li>
+      <li>সাধারণ সম্পাদক: জনাব তমুক</li>
+      <li>কোষাধ্যক্ষ: জনাব XYZ</li>
+    </ul>
+    <span class="link" id="backHome3">← হোমে ফিরুন</span>
+  </div>
+
+  <!-- Firebase + jsPDF -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="script.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyApZH0la4dyXRJ1rSJVBlusIrLhmAIehLk",
+      authDomain: "dream-land-e55e0.firebaseapp.com",
+      databaseURL: "https://dream-land-e55e0-default-rtdb.firebaseio.com",
+      projectId: "dream-land-e55e0",
+      storageBucket: "dream-land-e55e0.firebasestorage.app",
+      messagingSenderId: "544133561119",
+      appId: "1:544133561119:web:2a30b38a7b1d9f93cfce2a"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    const $ = id => document.getElementById(id);
+    const show = id => $(id).classList.remove('hidden');
+    const hide = id => $(id).classList.add('hidden');
+
+    // Navigation
+    $("showRules").onclick     = () => { hide("welcome"); show("rules"); };
+    $("showLoanRules").onclick = () => { hide("welcome"); show("loanRules"); };
+    $("backHomeRules").onclick = () => { hide("rules"); show("welcome"); };
+    $("backHomeLoanRules").onclick = () => { hide("loanRules"); show("welcome"); };
+    $("goLogin").onclick       = () => { hide("welcome"); show("login"); };
+    $("goCommittees").onclick  = () => { hide("welcome"); show("committees"); };
+    $("backHome1").onclick     = () => { hide("login"); show("welcome"); };
+    $("backHome2").onclick     = () => { hide("result"); show("welcome"); };
+    $("backHome3").onclick     = () => { hide("committees"); show("welcome"); };
+
+    $("togglePass").onclick = () => {
+      const p = $("pass");
+      if (p.type === "password") { p.type = "text"; $("togglePass").textContent = "🙈"; }
+      else { p.type = "password"; $("togglePass").textContent = "👁"; }
+    };
+
+    function renderRow(row){
+      $("v_code").textContent  = row["1_ CODE"] ?? "";
+      $("v_name").textContent  = row["2_ NAME"] ?? "";
+      $("v_nid").textContent   = row["3_ NID NO"] ?? "";
+      $("v_phone").textContent = row["4_ PHONE"] ?? "";
+      $("v_inst").textContent  = row["5_ INSTALMENT"] ?? "";
+      $("v_pay").textContent   = row["6_TOTAL PAY"] ?? "";
+    }
+    function say(t, ok=false){
+      $("msg").textContent = t;
+      $("msg").className = "msg " + (ok ? "ok" : "err");
+    }
+
+    async function doLogin(){
+      say(""); hide("result");
+      const code = $("code").value.trim();
+      const pass = $("pass").value.trim();
+      if(!code || !pass){ say("CODE এবং PASS লিখুন"); return; }
+
+      $("loginBtn").disabled = true;
+      try{
+        const snap = await db.ref("friends/"+code).once("value");
+        if(!snap.exists()){ say("ভুল ID ❌"); return; }
+        const row = snap.val();
+        const dbPass = String(row["7_ PASS"] ?? "").trim();
+
+        if(dbPass === pass){
+          say("লগইন সফল ✅", true);
+          renderRow(row);
+          hide("login");
+          $("welcomeName").textContent = row["2_ NAME"] ? `স্বাগতম, ${row["2_ NAME"]}!` : "স্বাগতম!";
+          show("successAnim");
+          setTimeout(() => { hide("successAnim"); show("result"); }, 2500);
+        }else{ say("ভুল পাসওয়ার্ড ❌"); }
+      }catch(err){ say("Firebase Error: " + (err.message || err)); }
+      finally{ $("loginBtn").disabled = false; }
+    }
+    $("loginBtn").onclick = doLogin;
+
+    $("logout").onclick = () => { hide("result"); show("login"); };
+
+    $("downloadPdf").onclick = () => {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      doc.setFontSize(18); doc.text("Dream Land Member Card", 20, 20);
+      doc.setFontSize(12);
+      doc.text("CODE: " + $("v_code").textContent, 20, 40);
+      doc.text("NAME: " + $("v_name").textContent, 20, 50);
+      doc.text("NID NO: " + $("v_nid").textContent, 20, 60);
+      doc.text("PHONE: " + $("v_phone").textContent, 20, 70);
+      doc.text("INSTALMENT: " + $("v_inst").textContent, 20, 80);
+      doc.text("TOTAL PAY: " + $("v_pay").textContent, 20, 90);
+      doc.save("member_card.pdf");
+    };
+  </script>
 </body>
 </html>
