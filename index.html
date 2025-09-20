@@ -1,199 +1,456 @@
 <!doctype html>
 <html lang="bn">
+
 <head>
   <meta charset="utf-8" />
-  <title>Dream Land — Welcome → Rules → Loan Rules → Login → Info</title>
+  <title>স্বপ্ন নীড় সোসাইটি — Welcome → Rules → Loan Rules → Login → Info</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- libraries -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
   <style>
-    :root { --bg:#163754; --card:#0f2a41; }
-    *{ box-sizing:border-box }
-    body{
-      margin:0;background:var(--bg);color:#fff;min-height:100vh;
-      display:grid;place-items:center;font-family:system-ui, Segoe UI, Arial
+    :root {
+      --bg: #163754;
+      --card: #0f2a41;
+      --accent: #4CAF50;
+      --muted: #9ad6ff;
     }
-    .card{
-      width:560px;max-width:94vw;background:var(--card);
-      border:1px solid #184261;padding:22px;border-radius:16px;
-      box-shadow:0 14px 40px rgba(0,0,0,.25)
-    }
-    h1,h2{margin:0 0 12px;text-align:center}
-    p{margin:0 0 10px}
-    .hidden{display:none !important;}
-    .logo{width:150px;height:150px;object-fit:contain;display:block;margin:0 auto 14px}
-    .grid-btn{display:grid;gap:12px;margin:18px 0}
 
-    button{
-      width:100%;padding:12px;border:0;border-radius:10px;color:#fff;
-      font-size:16px;cursor:pointer;font-weight:600;
+    * {
+      box-sizing: border-box
     }
-    button:hover{filter:brightness(.9)}
-    button:disabled{opacity:.6;cursor:not-allowed}
 
-    .btn-member   { background:#4CAF50; }
-    .btn-loan     { background:#2196F3; }
-    .btn-login    { background:#FF9800; }
-    .btn-committee{ background:#9C27B0; }
-    .btn-pdf      { background:#f44336; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: #fff;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      font-family: system-ui, "Segoe UI", Arial, sans-serif;
+    }
 
-    a{text-decoration:none}
-    label{display:block;margin:8px 0 4px}
-    input{
-      width:100%;height:44px;line-height:44px;padding:0 14px;
-      border-radius:8px;border:1px solid #2b5576;background:#0b2336;color:#eef
+    .card {
+      width: 560px;
+      max-width: 94vw;
+      background: var(--card);
+      border: 1px solid #184261;
+      padding: 22px;
+      border-radius: 16px;
+      box-shadow: 0 14px 40px rgba(0, 0, 0, .25);
     }
-    .msg{min-height:1.2em;margin:10px 0;font-weight:700}
-    .ok{color:#4ad97f}.err{color:#ff6b6b}
 
-    .grid{
-      display:grid;grid-template-columns:140px 1fr;gap:8px 10px;margin-top:10px
+    h1,
+    h2 {
+      margin: 0 0 12px;
+      text-align: center;
     }
-    .row{position:relative}
-    .row input{padding-right:46px}
-    .eye{
-      position:absolute;right:10px;top:50%;transform:translateY(-50%);
-      width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;
-      background:transparent;border:0;color:#bcd;cursor:pointer
-    }
-    .link{color:#9ad6ff;cursor:pointer;text-align:center;display:block;margin-top:10px}
 
-    .article{margin-top:16px;text-align:left;line-height:1.6}
-    ul{margin:8px 0 0 18px}
+    p {
+      margin: 0 0 10px;
+    }
 
-    .notice{
-      background:#fff3cd;color:#533f03;border:1px solid #ffecb5;
-      border-radius:12px;padding:14px 16px;box-shadow:0 6px 18px rgba(0,0,0,.15);
-      margin-bottom:12px;
+    .hidden {
+      display: none !important;
     }
-    .notice h3{margin:0 0 8px;font-size:18px;text-align:left;display:flex;align-items:center;gap:8px;}
-    .notice ul{margin:8px 0 0 22px;line-height:1.55}
 
-    #successAnim{ text-align:center; animation:fadeIn .5s ease; }
-    .anim-box{ width:120px;height:120px;margin:40px auto 14px;position:relative; }
-    .circle{
-      width:120px;height:120px;border-radius:50%;background:#4CAF50;
-      display:flex;align-items:center;justify-content:center;position:absolute;inset:0;
-      animation:popIn .6s ease;
+    .logo {
+      width: 150px;
+      height: 150px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto 14px;
     }
-    .check{
-      width:40px;height:20px;border-left:5px solid #fff;border-bottom:5px solid #fff;
-      transform:rotate(-45deg);margin:auto;animation:drawCheck .8s ease forwards;
+
+    .grid-btn {
+      display: grid;
+      gap: 12px;
+      margin: 18px 0;
     }
-    #welcomeName{
-      font-size:22px;font-weight:800;margin-top:6px;
-      font-family: "Hind Siliguri", system-ui, sans-serif;
-      animation:zoomIn 1s ease;
+
+    button {
+      width: 100%;
+      padding: 12px;
+      border: 0;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      font-weight: 600;
     }
-    @keyframes popIn{from{transform:scale(0);opacity:0} to{transform:scale(1);opacity:1}}
-    @keyframes drawCheck{from{width:0;height:0} to{width:40px;height:20px}}
-    @keyframes zoomIn{from{transform:scale(.5);opacity:0} to{transform:scale(1);opacity:1}}
-    @keyframes fadeIn{from{opacity:0} to{opacity:1}}
+
+    button:hover {
+      filter: brightness(.95);
+    }
+
+    button:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+
+    .btn-member {
+      background: #4CAF50;
+    }
+
+    .btn-loan {
+      background: #2196F3;
+    }
+
+    .btn-login {
+      background: #FF9800;
+    }
+
+    .btn-committee {
+      background: #9C27B0;
+    }
+
+    .btn-pdf {
+      background: #f44336;
+    }
+
+    a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    label {
+      display: block;
+      margin: 8px 0 4px;
+      color: #cfeaff;
+    }
+
+    input {
+      width: 100%;
+      height: 44px;
+      line-height: 44px;
+      padding: 0 14px;
+      border-radius: 8px;
+      border: 1px solid #2b5576;
+      background: #0b2336;
+      color: #eef;
+    }
+
+    .msg {
+      min-height: 1.2em;
+      margin: 10px 0;
+      font-weight: 700;
+    }
+
+    .ok {
+      color: #4ad97f
+    }
+
+    .err {
+      color: #ff6b6b
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 8px 10px;
+      margin-top: 10px;
+      color: #cde8ff;
+    }
+
+    .row {
+      position: relative;
+    }
+
+    .row input {
+      padding-right: 46px;
+    }
+
+    .eye {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 28px;
+      height: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: 0;
+      color: #bcd;
+      cursor: pointer;
+    }
+
+    .link {
+      color: #9ad6ff;
+      cursor: pointer;
+      text-align: center;
+      display: block;
+      margin-top: 10px;
+    }
+
+    .article {
+      margin-top: 16px;
+      text-align: left;
+      line-height: 1.6;
+      color: #dff1ff;
+    }
+
+    .result-box {
+      margin-top: 12px;
+      padding: 12px;
+      background: #071a2a;
+      border-radius: 8px;
+      border: 1px solid #1f445d;
+    }
+
+    .notice {
+      background: #fff3cd;
+      color: #533f03;
+      border: 1px solid #ffecb5;
+      border-radius: 12px;
+      padding: 14px 16px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, .15);
+      margin-bottom: 12px;
+      color: #533f03;
+    }
+
+    .notice h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    footer {
+      margin-top: 12px;
+      text-align: center;
+      color: #cfeaff;
+      font-size: 13px;
+    }
+
+    /* Member card inside result (visual) */
+    #memberCard {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
+      border-radius: 12px;
+      padding: 14px;
+      position: relative;
+      overflow: hidden;
+      color: #eaf6ff;
+    }
+
+    /* watermark (uses local logo.png path) */
+    #memberCard::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url('./logo.png');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 260px;
+      opacity: 0.06;
+      pointer-events: none;
+    }
+
+    .mc-top {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      z-index: 1;
+      position: relative;
+    }
+
+    .mc-top img {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      border-radius: 10px;
+      background: #fff;
+      padding: 6px;
+    }
+
+    .mc-title {
+      flex: 1;
+      text-align: center;
+      color: #fff;
+      line-height: 1.1;
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    .mc-fields {
+      margin-top: 12px;
+      z-index: 1;
+      position: relative;
+    }
+
+    .mc-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 4px;
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.04);
+      color: #dff1ff;
+    }
+
+    .mc-footer {
+      margin-top: 8px;
+      text-align: center;
+      font-size: 12px;
+      color: #c9e7ff;
+      z-index: 1;
+      position: relative;
+    }
+
+    /* small helper (contact) */
+    .help {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #cfeaff;
+      text-align: center;
+    }
   </style>
 </head>
+
 <body>
 
-  <!-- Welcome -->
+  <!-- WELCOME -->
   <div id="welcome" class="card">
-    <img class="logo" src="./logo.png"
-         onerror="this.onerror=null;this.src='https://drive.google.com/uc?export=view&id=1EGbLTY58jMndZr54waGm7RjeqcX5SYsP';"
-         alt="Logo">
-
+    <img class="logo" src="./logo.png" onerror="this.onerror=null;this.src='https://drive.google.com/uc?export=view&id=1EGbLTY58jMndZr54waGm7RjeqcX5SYsP';" alt="Logo">
     <h1>স্বাগতম!</h1>
-    <p>“স্বপ্ন নীড় সোসাইটি”-তে আপনাকে আন্তরিক স্বাগতম 🌸</p>
+    <p class="article">“স্বপ্ন নীড় সোসাইটি”-তে আপনাকে আন্তরিক স্বাগতম 🌸</p>
 
     <div class="grid-btn">
       <button id="showRules" class="btn-member">📥 ডাউনলোড সদস্য আবেদন ফর্ম</button>
       <button id="showLoanRules" class="btn-loan">📥 ঋণ প্রদানের নিয়মাবলী</button>
-      <button id="goLogin" class="btn-login">🔑 সদস্য লগ ইন</button>
+      <a href="#" style="text-decoration:none"><button id="goLogin" class="btn-login">🔑 সদস্য লগ ইন</button></a>
       <button id="goCommittees" class="btn-committee">👥 আমাদের কমিটি</button>
     </div>
 
-    <!-- ✅ সাম্প্রতিক আর্টিকেল -->
     <div class="article">
       <h2>📰 সাম্প্রতিক আর্টিকেল</h2>
       <p>👉 আমাদের সমাজ উন্নয়নের জন্য বিভিন্ন কর্মসূচি চলছে।</p>
       <p>👉 ঋণ প্রদানের নিয়মাবলী শীঘ্রই আপডেট করা হবে।</p>
       <p>👉 নতুন সদস্য সংগ্রহ অভিযান শুরু হয়েছে।</p>
     </div>
+
+    <div class="help">Help: <a href="mailto:saiful.shanto1122@gmail.com">saiful.shanto1122@gmail.com</a> | WhatsApp: <a href="https://wa.me/8801633346080" target="_blank">01633346080</a></div>
   </div>
 
-  <!-- Member Rules -->
+  <!-- RULES -->
   <div id="rules" class="card hidden">
+    <h2>📜 সদস্য আবেদন নিয়মাবলী</h2>
     <div class="notice">
-      <h3>⚠️ সদস্য হওয়ার নিয়মাবলী</h3>
+      <h3>দয়া করে নিচের নিয়মগুলো ভালো করে পড়ুন</h3>
       <ul>
-        <li>২ কপি ছবি, এনআইডি কপি ও ২০০ টাকা ফি জমা দিতে হবে।</li>
-        <li>প্রতি মাসের ১৫ তারিখে সাবস্ক্রিপশন ফি দিতে হবে, না দিলে ৫০০ টাকা জরিমানা।</li>
-        <li>পরপর ৩ মাস কিস্তি না দিলে সদস্যপদ বাতিল হতে পারে।</li>
-        <li>শেয়ার বাতিল করতে হলে ৩ মাস আগে লিখিত আবেদন করতে হবে।</li>
-        <li>বের হওয়ার সময় মোট টাকার ৫% কর্তন করা হবে।</li>
-        <li>৫ বছরের বেশি মেয়াদে ইন্টারেস্ট প্রদান করা হবে না।</li>
+        <li>শেয়ারহোল্ডার এর ২ কপি ছবি, এনআইডি ১ কপি এবং নমিনি ১ কপি ছবি, এনআইডি ১ কপি ও ২০০ টাকা জমা দিয়ে ফরম ফিলাপ করে জমা দিতে হবে।</li>
+        <li>প্রতি মাসের ১৫ তারিখের মধ্যে সাবস্ক্রিপশন ফি সংগ্রহ করা হবে; প্রদান না করলে ৫০০ টাকা জরিমানা করা হবে।</li>
+        <li>কোনো সদস্য পরপর তিন মাসের কিস্তি দিতে ব্যর্থ হলে সংগঠন থেকে বাছাই/নিষ্পত্তি করা হতে পারে।</li>
+        <li>শেয়ার বাতিল করতে হলে প্রকল্পের সভাপতির বরাবর ৩ মাস পূর্বে লিখিতভাবে জানতে হবে।</li>
+        <li>সদস্যতার বাতিলের সময়ে মোট আদায়কৃত অর্থ থেকে ৫% চার্জ কাটা হবে।</li>
+        <li>৫ বছরের বেশি মেয়াদে সংগঠন থেকে বের হলে কোনো ইন্টারেস্ট প্রদান করা হবে না।</li>
       </ul>
     </div>
-    <a href="forms/member_form.pdf" target="_blank">
-      <button class="btn-member">⬇️ ফর্ম ডাউনলোড করুন</button>
-    </a>
+    <a href="forms/member_form.pdf" target="_blank"><button class="btn-member">⬇️ ফর্ম ডাউনলোড করুন</button></a>
     <span class="link" id="backHomeRules">← হোমে ফিরুন</span>
+    <div class="help">Contact: <a href="mailto:saiful.shanto1122@gmail.com">saiful.shanto1122@gmail.com</a> | WhatsApp: <a href="https://wa.me/8801633346080" target="_blank">01633346080</a></div>
   </div>
 
-  <!-- Loan Rules -->
+  <!-- LOAN RULES -->
   <div id="loanRules" class="card hidden">
+    <h2>💰 ঋণ প্রদানের নিয়মাবলী</h2>
     <div class="notice">
-      <h3>💰 ঋণ প্রদানের নিয়মাবলী</h3>
       <ul>
         <li>শুধুমাত্র সক্রিয় সদস্যরাই ঋণ আবেদন করতে পারবেন।</li>
         <li>ঋণ গ্রহণের জন্য কমপক্ষে ৬ মাসের সদস্যপদ থাকতে হবে।</li>
-        <li>ঋণ সর্বোচ্চ শেয়ারের দ্বিগুণ পর্যন্ত নেওয়া যাবে।</li>
-        <li>ঋণের কিস্তি মাসিক ভিত্তিতে শোধ করতে হবে।</li>
-        <li>কোনো কিস্তি মিস করলে অতিরিক্ত ৫% জরিমানা যোগ হবে।</li>
+        <li>আপনি আপনার জমাকৃত টাকার মোট ৭০% পর্যন্ত ঋণ নিতে পারবেন (প্রকাশিত নিয়ম অনুসারে)।</li>
+        <li>ঋণ গ্রহণের ১৫ দিন আগে জানাতে হবে।</li>
         <li>ঋণ পরিশোধ না করলে সংগঠনের সিদ্ধান্ত অনুযায়ী আইনগত ব্যবস্থা নেওয়া হবে।</li>
+        <li>কিস্তি মিস করলে অতিরিক্ত জরিমানা/শাস্তি প্রযোজ্য হবে।</li>
       </ul>
     </div>
-    <a href="forms/loan_form.pdf" target="_blank">
-      <button class="btn-loan">⬇️ ঋণ ফর্ম ডাউনলোড করুন</button>
-    </a>
+    <a href="forms/loan_form.pdf" target="_blank"><button class="btn-loan">⬇️ ঋণ ফর্ম ডাউনলোড করুন</button></a>
     <span class="link" id="backHomeLoanRules">← হোমে ফিরুন</span>
+    <div class="help">Contact: <a href="mailto:saiful.shanto1122@gmail.com">saiful.shanto1122@gmail.com</a> | WhatsApp: <a href="https://wa.me/8801633346080" target="_blank">01633346080</a></div>
   </div>
 
-  <!-- Login -->
+  <!-- LOGIN -->
   <div id="login" class="card hidden">
     <h2>লগইন (CODE + PASS)</h2>
     <label>CODE</label>
     <input id="code" placeholder="User ID">
     <label>PASS</label>
     <div class="row">
-      <input id="pass" type="password" placeholder="Password">
-      <button class="eye" id="togglePass">👁</button>
+      <input id="pass" type="password" placeholder="Password" aria-label="Password">
+      <button class="eye" id="togglePass" aria-label="Show/Hide">👁</button>
     </div>
     <button id="loginBtn" class="btn-login">লগইন</button>
     <div id="msg" class="msg"></div>
     <span class="link" id="backHome1">← হোমে ফিরুন</span>
+    <div class="help">Help: <a href="mailto:saiful.shanto1122@gmail.com">saiful.shanto1122@gmail.com</a> | WhatsApp: <a href="https://wa.me/8801633346080" target="_blank">01633346080</a></div>
   </div>
 
-  <!-- Success -->
-  <div id="successAnim" class="hidden">
-    <div class="anim-box">
-      <div class="circle"><div class="check"></div></div>
+  <!-- SUCCESS ANIM -->
+  <div id="successAnim" class="card hidden">
+    <div class="anim-box" style="text-align:center; margin-bottom:8px;">
+      <div class="circle" style="width:120px;height:120px;border-radius:50%;background:#4CAF50;display:flex;align-items:center;justify-content:center;margin:0 auto;">
+        <div class="check" style="width:40px;height:20px;border-left:5px solid #fff;border-bottom:5px solid #fff;transform:rotate(-45deg);"></div>
+      </div>
     </div>
-    <div id="welcomeName">স্বাগতম!</div>
+    <div id="welcomeName" style="font-weight:700; text-align:center;"></div>
   </div>
 
-  <!-- Result -->
+  <!-- RESULT (member card visual) -->
   <div id="result" class="card hidden">
     <h2>আপনার তথ্য</h2>
-    <div class="grid">
-      <div>CODE</div><div id="v_code"></div>
-      <div>NAME</div><div id="v_name"></div>
-      <div>NID NO</div><div id="v_nid"></div>
-      <div>PHONE</div><div id="v_phone"></div>
-      <div>INSTALMENT</div><div id="v_inst"></div>
-      <div>TOTAL PAY</div><div id="v_pay"></div>
+
+    <div id="memberCard">
+      <div class="mc-top">
+        <img src="./logo.png" onerror="this.onerror=null;this.src='https://drive.google.com/uc?export=view&id=1EGbLTY58jMndZr54waGm7RjeqcX5SYsP';" alt="Logo" class="mc-logo">
+        <div class="mc-title">
+          <div style="font-size:16px;font-weight:800;">স্বপ্ন নীড় সোসাইটি</div>
+          <div style="font-size:13px;font-weight:600;opacity:0.95;">মেম্বার কার্ড</div>
+        </div>
+      </div>
+
+      <div class="mc-fields">
+        <div class="mc-row">
+          <div>কোড</div>
+          <div id="v_code"></div>
+        </div>
+        <div class="mc-row">
+          <div>নাম</div>
+          <div id="v_name"></div>
+        </div>
+        <div class="mc-row">
+          <div>এনআইডি</div>
+          <div id="v_nid"></div>
+        </div>
+        <div class="mc-row">
+          <div>ফোন</div>
+          <div id="v_phone"></div>
+        </div>
+        <div class="mc-row">
+          <div>কিস্তি</div>
+          <div id="v_inst"></div>
+        </div>
+        <div class="mc-row">
+          <div>মোট প্রদান</div>
+          <div id="v_pay"></div>
+        </div>
+      </div>
+
+      <div class="mc-footer" id="issuedAt">ইস্যু করা: </div>
     </div>
-    <button id="downloadPdf" class="btn-pdf">📄 ডাউনলোড মেম্বার কার্ড</button>
-    <button id="logout" class="btn-login">লগআউট</button>
+
+    <button id="downloadPdf" class="btn-pdf" style="margin-top:12px">📄 ডাউনলোড মেম্বার কার্ড (PDF)</button>
+    <button id="logout" class="btn-login" style="margin-top:12px">লগআউট</button>
     <span class="link" id="backHome2">← হোমে ফিরুন</span>
+
+    <div class="help">Contact: <a href="mailto:saiful.shanto1122@gmail.com">saiful.shanto1122@gmail.com</a> | WhatsApp: <a href="https://wa.me/8801633346080" target="_blank">01633346080</a></div>
   </div>
 
-  <!-- Committees -->
+  <!-- COMMITTEES -->
   <div id="committees" class="card hidden">
     <h2>আমাদের কমিটি</h2>
     <ul>
@@ -202,14 +459,15 @@
       <li>কোষাধ্যক্ষ: জনাব XYZ</li>
     </ul>
     <span class="link" id="backHome3">← হোমে ফিরুন</span>
+    <div class="help">Contact: <a href="mailto:saiful.shanto1122@gmail.com">saiful.shanto1122@gmail.com</a> | WhatsApp: <a href="https://wa.me/8801633346080" target="_blank">01633346080</a></div>
   </div>
 
-  <!-- Firebase + jsPDF -->
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <footer style="position:fixed; left:0; right:0; bottom:8px; text-align:center; color:#cfeaff; font-size:13px;">
+    © স্বপ্ন নীড় সোসাইটি — Help: <a href="mailto:saiful.shanto1122@gmail.com">saiful.shanto1122@gmail.com</a> | WhatsApp: <a href="https://wa.me/8801633346080" target="_blank">01633346080</a>
+  </footer>
 
   <script>
+    // Firebase config (existing)
     const firebaseConfig = {
       apiKey: "AIzaSyApZH0la4dyXRJ1rSJVBlusIrLhmAIehLk",
       authDomain: "dream-land-e55e0.firebaseapp.com",
@@ -221,82 +479,221 @@
     };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
-
+    // Helpers (IDs kept same as your previous code)
     const $ = id => document.getElementById(id);
     const show = id => $(id).classList.remove('hidden');
     const hide = id => $(id).classList.add('hidden');
-
-    // Navigation
-    $("showRules").onclick     = () => { hide("welcome"); show("rules"); };
-    $("showLoanRules").onclick = () => { hide("welcome"); show("loanRules"); };
-    $("backHomeRules").onclick = () => { hide("rules"); show("welcome"); };
-    $("backHomeLoanRules").onclick = () => { hide("loanRules"); show("welcome"); };
-    $("goLogin").onclick       = () => { hide("welcome"); show("login"); };
-    $("goCommittees").onclick  = () => { hide("welcome"); show("committees"); };
-    $("backHome1").onclick     = () => { hide("login"); show("welcome"); };
-    $("backHome2").onclick     = () => { hide("result"); show("welcome"); };
-    $("backHome3").onclick     = () => { hide("committees"); show("welcome"); };
-
+    // Navigation handlers (IDs unchanged)
+    $("showRules").onclick = () => {
+      hide("welcome");
+      show("rules");
+    };
+    $("backHomeRules").onclick = () => {
+      hide("rules");
+      show("welcome");
+    };
+    $("showLoanRules").onclick = () => {
+      hide("welcome");
+      show("loanRules");
+    };
+    $("backHomeLoanRules").onclick = () => {
+      hide("loanRules");
+      show("welcome");
+    };
+    $("goLogin").onclick = () => {
+      hide("welcome");
+      show("login");
+    };
+    $("goCommittees").onclick = () => {
+      hide("welcome");
+      show("committees");
+    };
+    $("backHome1").onclick = () => {
+      hide("login");
+      show("welcome");
+    };
+    $("backHome2").onclick = () => {
+      hide("result");
+      show("welcome");
+    };
+    $("backHome3").onclick = () => {
+      hide("committees");
+      show("welcome");
+    };
+    // toggle pass
     $("togglePass").onclick = () => {
       const p = $("pass");
-      if (p.type === "password") { p.type = "text"; $("togglePass").textContent = "🙈"; }
-      else { p.type = "password"; $("togglePass").textContent = "👁"; }
+      if (p.type === "password") {
+        p.type = "text";
+        $("togglePass").textContent = "🙈";
+      } else {
+        p.type = "password";
+        $("togglePass").textContent = "👁";
+      }
     };
-
-    function renderRow(row){
-      $("v_code").textContent  = row["1_ CODE"] ?? "";
-      $("v_name").textContent  = row["2_ NAME"] ?? "";
-      $("v_nid").textContent   = row["3_ NID NO"] ?? "";
+    // render function (IDs same)
+    function renderRow(row) {
+      $("v_code").textContent = row["1_ CODE"] ?? "";
+      $("v_name").textContent = row["2_ NAME"] ?? "";
+      $("v_nid").textContent = row["3_ NID NO"] ?? "";
       $("v_phone").textContent = row["4_ PHONE"] ?? "";
-      $("v_inst").textContent  = row["5_ INSTALMENT"] ?? "";
-      $("v_pay").textContent   = row["6_TOTAL PAY"] ?? "";
+      $("v_inst").textContent = row["5_ INSTALMENT"] ?? "";
+      $("v_pay").textContent = row["6_TOTAL PAY"] ?? "";
+      // issued date
+      $("issuedAt").textContent = "ইস্যু করা: " + (new Date()).toLocaleString('bn-BD');
     }
-    function say(t, ok=false){
+
+    function say(t, ok = false) {
       $("msg").textContent = t;
       $("msg").className = "msg " + (ok ? "ok" : "err");
     }
-
-    async function doLogin(){
-      say(""); hide("result");
+    // LOGIN (logic unchanged — same DB path & PASS field)
+    async function doLogin() {
+      say("");
+      hide("result");
       const code = $("code").value.trim();
       const pass = $("pass").value.trim();
-      if(!code || !pass){ say("CODE এবং PASS লিখুন"); return; }
-
+      if (!code || !pass) {
+        say("CODE এবং PASS লিখুন");
+        return;
+      }
       $("loginBtn").disabled = true;
-      try{
-        const snap = await db.ref("friends/"+code).once("value");
-        if(!snap.exists()){ say("ভুল ID ❌"); return; }
+      try {
+        const snap = await db.ref("friends/" + code).once("value");
+        if (!snap.exists()) {
+          say("ভুল ID ❌");
+          return;
+        }
         const row = snap.val();
-        const dbPass = String(row["7_ PASS"] ?? "").trim();
-
-        if(dbPass === pass){
+        const dbPass = (row && row["7_ PASS"] != null) ? row["7_ PASS"].toString().trim() : "";
+        if (dbPass === pass) {
           say("লগইন সফল ✅", true);
           renderRow(row);
           hide("login");
-          $("welcomeName").textContent = row["2_ NAME"] ? `স্বাগতম, ${row["2_ NAME"]}!` : "স্বাগতম!";
           show("successAnim");
-          setTimeout(() => { hide("successAnim"); show("result"); }, 2500);
-        }else{ say("ভুল পাসওয়ার্ড ❌"); }
-      }catch(err){ say("Firebase Error: " + (err.message || err)); }
-      finally{ $("loginBtn").disabled = false; }
+          $("welcomeName").textContent = "স্বাগতম, " + (row["2_ NAME"] ?? "");
+          setTimeout(() => {
+            hide("successAnim");
+            show("result");
+          }, 1400);
+        } else {
+          say("ভুল পাসওয়ার্ড ❌");
+        }
+      } catch (err) {
+        console.error(err);
+        say("Firebase Error: " + (err.message || err));
+      } finally {
+        $("loginBtn").disabled = false;
+      }
     }
     $("loginBtn").onclick = doLogin;
-
-    $("logout").onclick = () => { hide("result"); show("login"); };
-
-    $("downloadPdf").onclick = () => {
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF();
-      doc.setFontSize(18); doc.text("Dream Land Member Card", 20, 20);
-      doc.setFontSize(12);
-      doc.text("CODE: " + $("v_code").textContent, 20, 40);
-      doc.text("NAME: " + $("v_name").textContent, 20, 50);
-      doc.text("NID NO: " + $("v_nid").textContent, 20, 60);
-      doc.text("PHONE: " + $("v_phone").textContent, 20, 70);
-      doc.text("INSTALMENT: " + $("v_inst").textContent, 20, 80);
-      doc.text("TOTAL PAY: " + $("v_pay").textContent, 20, 90);
-      doc.save("member_card.pdf");
+    $("pass").addEventListener("keydown", e => {
+      if (e.key === "Enter") doLogin();
+    });
+    $("code").addEventListener("keydown", e => {
+      if (e.key === "Enter") doLogin();
+    });
+    $("logout").onclick = () => {
+      hide("result");
+      show("login");
+    };
+    // DOWNLOAD PDF (tries html2canvas first; if it fails, fallback to programmatic jsPDF canvas)
+    $("downloadPdf").onclick = async () => {
+      const {
+        jsPDF
+      } = window.jspdf;
+      const cardEl = document.getElementById("memberCard");
+      // try html2canvas capture (best visual fidelity)
+      try {
+        const canvas = await html2canvas(cardEl, {
+          scale: 2,
+          useCORS: true,
+          allowTaint: false,
+          backgroundColor: '#ffffff'
+        });
+        const imgData = canvas.toDataURL("image/png");
+        const pdf = new jsPDF({
+          unit: 'mm',
+          format: 'a4'
+        });
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const imgProps = pdf.getImageProperties(imgData);
+        const pdfHeight = (imgProps.height * pageWidth) / imgProps.width;
+        // put image at top with small margin
+        pdf.addImage(imgData, 'PNG', 0, 10, pageWidth, pdfHeight);
+        pdf.save("member_card.pdf");
+        return;
+      } catch (err) {
+        console.warn("html2canvas failed (CORS/taint?). Fallback to generated PDF. Error:", err);
+      }
+      // fallback: draw simple card with canvas + jsPDF (ensures PDF created even if images tainted)
+      try {
+        const w = 800,
+          h = 480;
+        const c = document.createElement('canvas');
+        c.width = w;
+        c.height = h;
+        const ctx = c.getContext('2d');
+        // background
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, w, h);
+        // header bar
+        ctx.fillStyle = '#163754';
+        ctx.fillRect(0, 0, w, 80);
+        // simple logo circle
+        ctx.fillStyle = '#FFB74D';
+        ctx.beginPath();
+        ctx.arc(60, 40, 30, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#063046';
+        ctx.font = 'bold 28px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('DL', 60, 46);
+        // header texts
+        ctx.fillStyle = '#fff';
+        ctx.font = 'bold 22px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('স্বপ্ন নীড় সোসাইটি', w / 2, 45);
+        ctx.fillStyle = '#000';
+        ctx.font = '16px sans-serif';
+        ctx.textAlign = 'left';
+        // fields (read from DOM)
+        const fields = [
+          ['কোড: ', $("v_code").textContent || '-'],
+          ['নাম: ', $("v_name").textContent || '-'],
+          ['এনআইডি: ', $("v_nid").textContent || '-'],
+          ['ফোন: ', $("v_phone").textContent || '-'],
+          ['কিস্তি: ', $("v_inst").textContent || '-'],
+          ['মোট প্রদান: ', $("v_pay").textContent || '-']
+        ];
+        let y = 120;
+        ctx.fillStyle = '#111';
+        for (let i = 0; i < fields.length; i++) {
+          ctx.font = '16px sans-serif';
+          ctx.fillText(fields[i][0] + fields[i][1], 40, y);
+          y += 36;
+        }
+        // issue date
+        ctx.fillStyle = '#444';
+        ctx.font = '13px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('ইস্যু করা: ' + (new Date()).toLocaleString(), w / 2, h - 30);
+        const imgFallback = c.toDataURL('image/png');
+        const pdf = new jsPDF({
+          unit: 'mm',
+          format: 'a4'
+        });
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const imgProps = pdf.getImageProperties(imgFallback);
+        const pdfHeight = (imgProps.height * pageWidth) / imgProps.width;
+        pdf.addImage(imgFallback, 'PNG', 0, 20, pageWidth, pdfHeight);
+        pdf.save("member_card.pdf");
+      } catch (e) {
+        console.error("Fallback PDF creation failed:", e);
+        alert("PDF তৈরি করতে সমস্যা হয়েছে: " + (e.message || e));
+      }
     };
   </script>
 </body>
+
 </html>
