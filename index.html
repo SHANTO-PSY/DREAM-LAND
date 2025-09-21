@@ -18,84 +18,299 @@
       --card: #0f2a41;
       --muted: #9ad6ff;
     }
-    * { box-sizing: border-box }
+
+    * {
+      box-sizing: border-box
+    }
+
     body {
-      margin: 0; background: var(--bg); color: #fff; min-height: 100vh;
-      display: grid; place-items: center; font-family: system-ui, "Segoe UI", Arial, sans-serif;
+      margin: 0;
+      background: var(--bg);
+      color: #fff;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      font-family: system-ui, "Segoe UI", Arial, sans-serif;
     }
+
     .card {
-      width: 560px; max-width: 94vw; background: var(--card); border: 1px solid #184261;
-      padding: 22px; border-radius: 16px; box-shadow: 0 14px 40px rgba(0,0,0,.25);
+      width: 560px;
+      max-width: 94vw;
+      background: var(--card);
+      border: 1px solid #184261;
+      padding: 22px;
+      border-radius: 16px;
+      box-shadow: 0 14px 40px rgba(0, 0, 0, .25);
     }
-    h1,h2 { margin: 0 0 12px; text-align: center }
-    p { margin: 0 0 10px }
-    .hidden { display: none !important; }
-    .logo { width: 150px; height: 150px; object-fit: contain; display: block; margin: 0 auto 14px; }
-    .grid-btn { display: grid; gap: 12px; margin: 18px 0 }
+
+    h1,
+    h2 {
+      margin: 0 0 12px;
+      text-align: center
+    }
+
+    p {
+      margin: 0 0 10px
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .logo {
+      width: 150px;
+      height: 150px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto 14px;
+    }
+
+    .grid-btn {
+      display: grid;
+      gap: 12px;
+      margin: 18px 0
+    }
+
     button {
-      width: 100%; padding: 12px; border: 0; border-radius: 10px; color: #fff; font-size: 16px; cursor: pointer; font-weight: 600;
+      width: 100%;
+      padding: 12px;
+      border: 0;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      font-weight: 600;
     }
-    button:hover { filter: brightness(.95) }
-    button:disabled { opacity: .6; cursor: not-allowed }
+
+    button:hover {
+      filter: brightness(.95)
+    }
+
+    button:disabled {
+      opacity: .6;
+      cursor: not-allowed
+    }
 
     /* Buttons */
-    .btn-apply { background: #4CAF50; }       /* Apply Forms */
-    .btn-pay   { background: #00A39C; }       /* Payment */
-    .btn-login { background: #FF9800; }       /* Login */
-    .btn-committee { background: #9C27B0; }   /* Committees */
-    .btn-pdf   { background: #f44336; }       /* PDF Download */
-    .btn-tab { background: #0b2c42; border: 1px solid #1f4e6b; }
-    .btn-tab.active { background: #145b82; }
+    .btn-apply {
+      background: #4CAF50;
+    }
 
-    a { color: var(--muted); text-decoration: none; }
-    label { display: block; margin: 8px 0 4px; color: #cfeaff }
+    /* Apply Forms */
+    .btn-pay {
+      background: #00A39C;
+    }
+
+    /* Payment */
+    .btn-login {
+      background: #FF9800;
+    }
+
+    /* Login */
+    .btn-committee {
+      background: #9C27B0;
+    }
+
+    /* Committees */
+    .btn-pdf {
+      background: #f44336;
+    }
+
+    /* PDF Download */
+    .btn-tab {
+      background: #0b2c42;
+      border: 1px solid #1f4e6b;
+    }
+
+    .btn-tab.active {
+      background: #145b82;
+    }
+
+    a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    label {
+      display: block;
+      margin: 8px 0 4px;
+      color: #cfeaff
+    }
+
     input {
-      width: 100%; height: 44px; line-height: 44px; padding: 0 14px; border-radius: 8px;
-      border: 1px solid #2b5576; background: #0b2336; color: #eef;
+      width: 100%;
+      height: 44px;
+      line-height: 44px;
+      padding: 0 14px;
+      border-radius: 8px;
+      border: 1px solid #2b5576;
+      background: #0b2336;
+      color: #eef;
     }
-    .msg { min-height: 1.2em; margin: 10px 0; font-weight: 700 }
-    .ok { color: #4ad97f } .err { color: #ff6b6b }
-    .grid { display: grid; grid-template-columns: 140px 1fr; gap: 8px 10px; margin-top: 10px; color: #cde8ff; }
-    .row { position: relative } .row input { padding-right: 46px }
+
+    .msg {
+      min-height: 1.2em;
+      margin: 10px 0;
+      font-weight: 700
+    }
+
+    .ok {
+      color: #4ad97f
+    }
+
+    .err {
+      color: #ff6b6b
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 8px 10px;
+      margin-top: 10px;
+      color: #cde8ff;
+    }
+
+    .row {
+      position: relative
+    }
+
+    .row input {
+      padding-right: 46px
+    }
+
     .eye {
-      position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
-      width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center;
-      background: transparent; border: 0; color: #bcd; cursor: pointer;
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 28px;
+      height: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: 0;
+      color: #bcd;
+      cursor: pointer;
     }
-    .link { color: #9ad6ff; cursor: pointer; text-align: center; display: block; margin-top: 10px }
-    .article { margin-top: 16px; text-align: left; line-height: 1.6; color: #dff1ff }
+
+    .link {
+      color: #9ad6ff;
+      cursor: pointer;
+      text-align: center;
+      display: block;
+      margin-top: 10px
+    }
+
+    .article {
+      margin-top: 16px;
+      text-align: left;
+      line-height: 1.6;
+      color: #dff1ff
+    }
+
     .notice {
-      background: #fff3cd; color: #533f03; border: 1px solid #ffecb5; border-radius: 12px;
-      padding: 14px 16px; box-shadow: 0 6px 18px rgba(0,0,0,.15); margin-bottom: 12px;
+      background: #fff3cd;
+      color: #533f03;
+      border: 1px solid #ffecb5;
+      border-radius: 12px;
+      padding: 14px 16px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, .15);
+      margin-bottom: 12px;
     }
-    .notice h3 { margin: 0 0 8px; font-size: 18px; text-align: left }
+
+    .notice h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      text-align: left
+    }
 
     /* Member card */
     #memberCard {
-      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
-      border-radius: 12px; padding: 14px; position: relative; overflow: hidden; color: #eaf6ff;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
+      border-radius: 12px;
+      padding: 14px;
+      position: relative;
+      overflow: hidden;
+      color: #eaf6ff;
     }
+
     #memberCard::before {
-      content: ""; position: absolute; inset: 0; background-image: url('./logo.png');
-      background-repeat: no-repeat; background-position: center; background-size: 260px; opacity: .06; pointer-events: none;
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url('./logo.png');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 260px;
+      opacity: .06;
+      pointer-events: none;
     }
-    .mc-top { display: flex; gap: 12px; align-items: center; z-index: 1; position: relative }
-    .mc-top img { width: 72px; height: 72px; object-fit: contain; border-radius: 10px; background: #fff; padding: 6px }
-    .mc-title { flex: 1; text-align: center; color: #fff; line-height: 1.1; font-weight: 700; font-size: 16px }
-    .mc-fields { margin-top: 12px; z-index: 1; position: relative }
-    .mc-row { display: flex; justify-content: space-between; padding: 6px 4px; border-bottom: 1px dashed rgba(255,255,255,0.04); color: #dff1ff }
-    .mc-footer { margin-top: 8px; text-align: center; font-size: 12px; color: #c9e7ff; z-index: 1; position: relative }
-    .help { margin-top: 10px; font-size: 13px; color: #cfeaff; text-align: center }
+
+    .mc-top {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      z-index: 1;
+      position: relative
+    }
+
+    .mc-top img {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      border-radius: 10px;
+      background: #fff;
+      padding: 6px
+    }
+
+    .mc-title {
+      flex: 1;
+      text-align: center;
+      color: #fff;
+      line-height: 1.1;
+      font-weight: 700;
+      font-size: 16px
+    }
+
+    .mc-fields {
+      margin-top: 12px;
+      z-index: 1;
+      position: relative
+    }
+
+    .mc-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 4px;
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.04);
+      color: #dff1ff
+    }
+
+    .mc-footer {
+      margin-top: 8px;
+      text-align: center;
+      font-size: 12px;
+      color: #c9e7ff;
+      z-index: 1;
+      position: relative
+    }
+
+    .help {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #cfeaff;
+      text-align: center
+    }
   </style>
 </head>
 
 <body>
 
   <!-- WELCOME -->
+
   <div id="welcome" class="card">
-    <img class="logo" src="./logo.png"
-         onerror="this.onerror=null;this.src='https://drive.google.com/uc?export=view&id=1EGbLTY58jMndZr54waGm7RjeqcX5SYsP';"
-         alt="Logo">
+    <img class="logo" src="./logo.png" onerror="this.onerror=null;this.src='https://drive.google.com/uc?export=view&id=1EGbLTY58jMndZr54waGm7RjeqcX5SYsP';" alt="Logo">
     <h1>স্বাগতম!</h1>
     <p class="article">“স্বপ্ন নীড় সোসাইটি”-তে আপনাকে আন্তরিক স্বাগতম 🌸</p>
 
@@ -121,7 +336,7 @@
 
   <!-- APPLY FORMS -->
   <div id="applyForms" class="card hidden">
-    <h2>📑 আবেদন ফর্মসমূহ</h2>
+    <h2>📑 আবেদন ফর্ম সমূহ</h2>
 
     <!-- Member Form -->
     <div class="notice">
@@ -169,7 +384,7 @@
       <div class="notice" style="background:#e8f4ff;border-color:#b6dcff;color:#073a57">
         <h3>ব্যাংক পেমেন্ট ডিটেইলস</h3>
         <ul>
-          <li><b>Bank:</b>  JAMUNA BANK PLC</li>
+          <li><b>Bank:</b> JAMUNA BANK PLC</li>
           <li><b>Branch:</b> SAVAR</li>
           <li><b>Account Name:</b> MD. RONI HOSSAIN RABBY/ MD. KAYES/ AL AMIN</li>
           <li><b>Account No:</b> 1101008356896</li>
@@ -183,10 +398,10 @@
       <div class="notice" style="background:#ffe8f3;border-color:#ffc1dc;color:#5a082b">
         <h3>বিকাশ পেমেন্ট ডিটেইলস</h3>
         <ul>
-          <li><b>Number (Personal):</b> 01976899397  (RONY)</li>
+          <li><b>Number (Personal):</b> 01976899397 (RONY)</li>
           <li><b>Type:</b> Send Money</li>
           <li><b>Reference:</b> আপনার CODE (যেমন 10001)</li>
-          <li><b>অবশ্যই ক্যাশ আউট খরচ সহ পাঠাবেন  </b>
+          <li><b>অবশ্যই ক্যাশ আউট খরচ সহ পাঠাবেন </b>
         </ul>
         <p style="margin-top:8px">পেমেন্টের স্ক্রিনশট আমাদের WhatsApp গ্রূপে পাঠান : <b>স্বপ্ন নীড় সোসাইটি</b></p>
       </div>
@@ -229,21 +444,37 @@
     <h2>আপনার তথ্য</h2>
     <div id="memberCard">
       <div class="mc-top">
-        <img src="./logo.png"
-             onerror="this.onerror=null;this.src='https://drive.google.com/uc?export=view&id=1EGbLTY58jMndZr54waGm7RjeqcX5SYsP';"
-             alt="Logo" class="mc-logo">
+        <img src="./logo.png" onerror="this.onerror=null;this.src='https://drive.google.com/uc?export=view&id=1EGbLTY58jMndZr54waGm7RjeqcX5SYsP';" alt="Logo" class="mc-logo">
         <div class="mc-title">
           <div style="font-size:16px;font-weight:800;">স্বপ্ন নীড় সোসাইটি</div>
           <div style="font-size:13px;font-weight:600;opacity:0.95;">মেম্বার কার্ড</div>
         </div>
       </div>
       <div class="mc-fields">
-        <div class="mc-row"><div>কোড</div><div id="v_code"></div></div>
-        <div class="mc-row"><div>নাম</div><div id="v_name"></div></div>
-        <div class="mc-row"><div>এনআইডি</div><div id="v_nid"></div></div>
-        <div class="mc-row"><div>ফোন</div><div id="v_phone"></div></div>
-        <div class="mc-row"><div>কিস্তি</div><div id="v_inst"></div></div>
-        <div class="mc-row"><div>মোট প্রদান</div><div id="v_pay"></div></div>
+        <div class="mc-row">
+          <div>কোড</div>
+          <div id="v_code"></div>
+        </div>
+        <div class="mc-row">
+          <div>নাম</div>
+          <div id="v_name"></div>
+        </div>
+        <div class="mc-row">
+          <div>এনআইডি</div>
+          <div id="v_nid"></div>
+        </div>
+        <div class="mc-row">
+          <div>ফোন</div>
+          <div id="v_phone"></div>
+        </div>
+        <div class="mc-row">
+          <div>কিস্তি</div>
+          <div id="v_inst"></div>
+        </div>
+        <div class="mc-row">
+          <div>মোট প্রদান</div>
+          <div id="v_pay"></div>
+        </div>
       </div>
       <div class="mc-footer" id="issuedAt">ইস্যু করা: </div>
     </div>
@@ -252,7 +483,8 @@
     <button id="logout" class="btn-login" style="margin-top:12px">লগআউট</button>
     <span class="link" id="backHome2">← হোমে ফিরুন</span>
     <div class="help">Contact: <a href="mailto:saiful.shanto1122@gmail.com">saiful.shanto1122@gmail.com</a> | WhatsApp:
-      <a href="https://wa.me/8801633346080" target="_blank">01633346080</a></div>
+      <a href="https://wa.me/8801633346080" target="_blank">01633346080</a>
+    </div>
   </div>
 
   <!-- COMMITTEES -->
@@ -265,7 +497,8 @@
     </ul>
     <span class="link" id="backHome3">← হোমে ফিরুন</span>
     <div class="help">Contact: <a href="mailto:saiful.shanto1122@gmail.com">saiful.shanto1122@gmail.com</a> | WhatsApp:
-      <a href="https://wa.me/8801633346080" target="_blank">01633346080</a></div>
+      <a href="https://wa.me/8801633346080" target="_blank">01633346080</a>
+    </div>
   </div>
 
   <script>
@@ -281,25 +514,47 @@
     };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
-
     // Helpers
     const $ = id => document.getElementById(id);
     const show = id => $(id).classList.remove('hidden');
     const hide = id => $(id).classList.add('hidden');
-
     // Nav
-    $("goApply").onclick    = () => { hide("welcome"); show("applyForms"); };
-    $("backHomeApply").onclick = () => { hide("applyForms"); show("welcome"); };
-
-    $("goPayment").onclick  = () => { hide("welcome"); show("payment"); };
-    $("backHomePayment").onclick = () => { hide("payment"); show("welcome"); };
-
-    $("goLogin").onclick    = () => { hide("welcome"); show("login"); };
-    $("goCommittees").onclick = () => { hide("welcome"); show("committees"); };
-    $("backHome1").onclick  = () => { hide("login"); show("welcome"); };
-    $("backHome2").onclick  = () => { hide("result"); show("welcome"); };
-    $("backHome3").onclick  = () => { hide("committees"); show("welcome"); };
-
+    $("goApply").onclick = () => {
+      hide("welcome");
+      show("applyForms");
+    };
+    $("backHomeApply").onclick = () => {
+      hide("applyForms");
+      show("welcome");
+    };
+    $("goPayment").onclick = () => {
+      hide("welcome");
+      show("payment");
+    };
+    $("backHomePayment").onclick = () => {
+      hide("payment");
+      show("welcome");
+    };
+    $("goLogin").onclick = () => {
+      hide("welcome");
+      show("login");
+    };
+    $("goCommittees").onclick = () => {
+      hide("welcome");
+      show("committees");
+    };
+    $("backHome1").onclick = () => {
+      hide("login");
+      show("welcome");
+    };
+    $("backHome2").onclick = () => {
+      hide("result");
+      show("welcome");
+    };
+    $("backHome3").onclick = () => {
+      hide("committees");
+      show("welcome");
+    };
     // Payment tabs
     $("bankTab").onclick = () => {
       $("bankTab").classList.add("active");
@@ -313,47 +568,60 @@
       $("bkashBox").classList.remove("hidden");
       $("bankBox").classList.add("hidden");
     };
-
     // Toggle password
     $("togglePass").onclick = () => {
       const p = $("pass");
-      if (p.type === "password") { p.type = "text"; $("togglePass").textContent = "🙈"; }
-      else { p.type = "password"; $("togglePass").textContent = "👁"; }
+      if (p.type === "password") {
+        p.type = "text";
+        $("togglePass").textContent = "🙈";
+      } else {
+        p.type = "password";
+        $("togglePass").textContent = "👁";
+      }
     };
-
     // Render to member card
     function renderRow(row) {
-      $("v_code").textContent  = row["1_ CODE"]       ?? "";
-      $("v_name").textContent  = row["2_ NAME"]       ?? "";
-      $("v_nid").textContent   = row["3_ NID NO"]     ?? "";
-      $("v_phone").textContent = row["4_ PHONE"]      ?? "";
-      $("v_inst").textContent  = row["5_ INSTALMENT"] ?? "";
-      $("v_pay").textContent   = row["6_TOTAL PAY"]   ?? "";
+      $("v_code").textContent = row["1_ CODE"] ?? "";
+      $("v_name").textContent = row["2_ NAME"] ?? "";
+      $("v_nid").textContent = row["3_ NID NO"] ?? "";
+      $("v_phone").textContent = row["4_ PHONE"] ?? "";
+      $("v_inst").textContent = row["5_ INSTALMENT"] ?? "";
+      $("v_pay").textContent = row["6_TOTAL PAY"] ?? "";
       $("issuedAt").textContent = "ইস্যু করা: " + (new Date()).toLocaleString('bn-BD');
     }
-
     // Login
-    function say(t, ok=false) {
+    function say(t, ok = false) {
       $("msg").textContent = t;
       $("msg").className = "msg " + (ok ? "ok" : "err");
     }
     async function doLogin() {
-      say(""); hide("result");
+      say("");
+      hide("result");
       const code = $("code").value.trim();
       const pass = $("pass").value.trim();
-      if (!code || !pass) { say("CODE এবং PASS লিখুন"); return; }
+      if (!code || !pass) {
+        say("CODE এবং PASS লিখুন");
+        return;
+      }
       $("loginBtn").disabled = true;
       try {
         const snap = await db.ref("friends/" + code).once("value");
-        if (!snap.exists()) { say("ভুল ID ❌"); return; }
+        if (!snap.exists()) {
+          say("ভুল ID ❌");
+          return;
+        }
         const row = snap.val();
         const dbPass = (row && row["7_ PASS"] != null) ? row["7_ PASS"].toString().trim() : "";
         if (dbPass === pass) {
           say("লগইন সফল ✅", true);
           renderRow(row);
-          hide("login"); show("successAnim");
+          hide("login");
+          show("successAnim");
           $("welcomeName").textContent = "স্বাগতম, " + (row["2_ NAME"] ?? "");
-          setTimeout(() => { hide("successAnim"); show("result"); }, 1400);
+          setTimeout(() => {
+            hide("successAnim");
+            show("result");
+          }, 1400);
         } else {
           say("ভুল পাসওয়ার্ড ❌");
         }
@@ -365,20 +633,35 @@
       }
     }
     $("loginBtn").onclick = doLogin;
-    $("pass").addEventListener("keydown", e => { if (e.key === "Enter") doLogin(); });
-    $("code").addEventListener("keydown", e => { if (e.key === "Enter") doLogin(); });
-
+    $("pass").addEventListener("keydown", e => {
+      if (e.key === "Enter") doLogin();
+    });
+    $("code").addEventListener("keydown", e => {
+      if (e.key === "Enter") doLogin();
+    });
     // Logout
-    $("logout").onclick = () => { hide("result"); show("login"); };
-
+    $("logout").onclick = () => {
+      hide("result");
+      show("login");
+    };
     // PDF Download (html2canvas + jsPDF)
     $("downloadPdf").onclick = async () => {
-      const { jsPDF } = window.jspdf;
+      const {
+        jsPDF
+      } = window.jspdf;
       const cardEl = $("memberCard");
       try {
-        const canvas = await html2canvas(cardEl, { scale: 2, useCORS: true, allowTaint: false, backgroundColor: '#ffffff' });
+        const canvas = await html2canvas(cardEl, {
+          scale: 2,
+          useCORS: true,
+          allowTaint: false,
+          backgroundColor: '#ffffff'
+        });
         const imgData = canvas.toDataURL("image/png");
-        const pdf = new jsPDF({ unit: 'mm', format: 'a4' });
+        const pdf = new jsPDF({
+          unit: 'mm',
+          format: 'a4'
+        });
         const pageWidth = pdf.internal.pageSize.getWidth();
         const imgProps = pdf.getImageProperties(imgData);
         const pdfHeight = (imgProps.height * pageWidth) / imgProps.width;
@@ -390,4 +673,5 @@
     };
   </script>
 </body>
+
 </html>
