@@ -514,10 +514,12 @@
     };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
+
     // Helpers
     const $ = id => document.getElementById(id);
     const show = id => $(id).classList.remove('hidden');
     const hide = id => $(id).classList.add('hidden');
+
     // Nav
     $("goApply").onclick = () => {
       hide("welcome");
@@ -555,6 +557,7 @@
       hide("committees");
       show("welcome");
     };
+
     // Payment tabs
     $("bankTab").onclick = () => {
       $("bankTab").classList.add("active");
@@ -568,6 +571,7 @@
       $("bkashBox").classList.remove("hidden");
       $("bankBox").classList.add("hidden");
     };
+
     // Toggle password
     $("togglePass").onclick = () => {
       const p = $("pass");
@@ -579,6 +583,7 @@
         $("togglePass").textContent = "👁";
       }
     };
+
     // Render to member card
     function renderRow(row) {
       $("v_code").textContent = row["1_ CODE"] ?? "";
@@ -589,11 +594,13 @@
       $("v_pay").textContent = row["6_TOTAL PAY"] ?? "";
       $("issuedAt").textContent = "ইস্যু করা: " + (new Date()).toLocaleString('bn-BD');
     }
+
     // Login
     function say(t, ok = false) {
       $("msg").textContent = t;
       $("msg").className = "msg " + (ok ? "ok" : "err");
     }
+
     async function doLogin() {
       say("");
       hide("result");
@@ -639,36 +646,41 @@
     $("code").addEventListener("keydown", e => {
       if (e.key === "Enter") doLogin();
     });
+
     // Logout
     $("logout").onclick = () => {
       hide("result");
       show("login");
     };
-    // PDF Download (html2canvas + jsPDF)
+
+    // PDF Download (html2canvas + jsPDF) — UPDATED for clear, exact print
     $("downloadPdf").onclick = async () => {
-      const {
-        jsPDF
-      } = window.jspdf;
+      const { jsPDF } = window.jspdf;
       const cardEl = $("memberCard");
       try {
+        // Use the card color behind the semi-transparent gradient so it matches on-screen look
+        const bgCol = getComputedStyle(document.documentElement).getPropertyValue('--card')?.trim() || '#0f2a41';
+
         const canvas = await html2canvas(cardEl, {
-          scale: 2,
+          scale: Math.max(3, Math.ceil(window.devicePixelRatio || 1) * 2), // high-res
           useCORS: true,
-          allowTaint: false,
-          backgroundColor: '#ffffff'
+          imageTimeout: 15000,
+          backgroundColor: bgCol,  // ensures dark card background, not white
+          logging: false
         });
+
         const imgData = canvas.toDataURL("image/png");
+        // Make the PDF exactly the same size as the rendered card to avoid stretching/blurring
         const pdf = new jsPDF({
-          unit: 'mm',
-          format: 'a4'
+          orientation: canvas.width >= canvas.height ? 'landscape' : 'portrait',
+          unit: 'px',
+          format: [canvas.width, canvas.height]
         });
-        const pageWidth = pdf.internal.pageSize.getWidth();
-        const imgProps = pdf.getImageProperties(imgData);
-        const pdfHeight = (imgProps.height * pageWidth) / imgProps.width;
-        pdf.addImage(imgData, 'PNG', 0, 10, pageWidth, pdfHeight);
+
+        pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
         pdf.save("member_card.pdf");
       } catch (err) {
-        alert("PDF তৈরি করতে সমস্যা হয়েছে: " + (err.message || err));
+        alert("PDF তৈরি করতে সমস্যা হয়েছে: " + (err?.message || err));
       }
     };
   </script>
