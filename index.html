@@ -17,6 +17,8 @@
       --bg: #163754;
       --card: #0f2a41;
       --muted: #9ad6ff;
+      /* inline SVG logo (saved) as data URI for reuse in CSS background */
+      --logo-uri: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 110'><path d='M10,78 Q110,98 210,78' fill='none' stroke='%2322C55E' stroke-width='6' stroke-linecap='round'/><path d='M70 74 L110 46 L150 74' fill='none' stroke='%2322D3EE' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/><rect x='107' y='70' width='12' height='18' rx='2' fill='%230F172A' stroke='%2322D3EE' stroke-width='2'/><circle cx='180' cy='28' r='10' fill='%23FACC15'/><path d='M54 80 v18' stroke='%2378350F' stroke-width='4' stroke-linecap='round'/><circle cx='54' cy='72' r='10' fill='%2322C55E'/></svg>");
     }
 
     * {
@@ -239,7 +241,7 @@
       content: "";
       position: absolute;
       inset: 0;
-      background-image: url('./logo.png');
+      background-image: var(--logo-uri); /* embedded SVG logo as watermark */
       background-repeat: no-repeat;
       background-position: center;
       background-size: 260px;
@@ -310,7 +312,9 @@
   <!-- WELCOME -->
 
   <div id="welcome" class="card">
-    <img class="logo" src="./logo.png" onerror="this.onerror=null;this.src='https://drive.google.com/uc?export=view&id=1EGbLTY58jMndZr54waGm7RjeqcX5SYsP';" alt="Logo">
+    <!-- embedded logo image (no external file) -->
+    <img class="logo" alt="Logo"
+         src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 110'><path d='M10,78 Q110,98 210,78' fill='none' stroke='%2322C55E' stroke-width='6' stroke-linecap='round'/><path d='M70 74 L110 46 L150 74' fill='none' stroke='%2322D3EE' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/><rect x='107' y='70' width='12' height='18' rx='2' fill='%230F172A' stroke='%2322D3EE' stroke-width='2'/><circle cx='180' cy='28' r='10' fill='%23FACC15'/><path d='M54 80 v18' stroke='%2378350F' stroke-width='4' stroke-linecap='round'/><circle cx='54' cy='72' r='10' fill='%2322C55E'/></svg>" />
     <h1>স্বাগতম!</h1>
     <p class="article">“স্বপ্ন নীড় সোসাইটি”-তে আপনাকে আন্তরিক স্বাগতম 🌸</p>
 
@@ -444,7 +448,9 @@
     <h2>আপনার তথ্য</h2>
     <div id="memberCard">
       <div class="mc-top">
-        <img src="./logo.png" onerror="this.onerror=null;this.src='https://drive.google.com/uc?export=view&id=1EGbLTY58jMndZr54waGm7RjeqcX5SYsP';" alt="Logo" class="mc-logo">
+        <!-- embedded logo image (no external file) -->
+        <img alt="Logo" class="mc-logo"
+             src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 110'><path d='M10,78 Q110,98 210,78' fill='none' stroke='%2322C55E' stroke-width='6' stroke-linecap='round'/><path d='M70 74 L110 46 L150 74' fill='none' stroke='%2322D3EE' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/><rect x='107' y='70' width='12' height='18' rx='2' fill='%230F172A' stroke='%2322D3EE' stroke-width='2'/><circle cx='180' cy='28' r='10' fill='%23FACC15'/><path d='M54 80 v18' stroke='%2378350F' stroke-width='4' stroke-linecap='round'/><circle cx='54' cy='72' r='10' fill='%2322C55E'/></svg>" />
         <div class="mc-title">
           <div style="font-size:16px;font-weight:800;">স্বপ্ন নীড় সোসাইটি</div>
           <div style="font-size:13px;font-weight:600;opacity:0.95;">মেম্বার কার্ড</div>
@@ -514,12 +520,10 @@
     };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
-
     // Helpers
     const $ = id => document.getElementById(id);
     const show = id => $(id).classList.remove('hidden');
     const hide = id => $(id).classList.add('hidden');
-
     // Nav
     $("goApply").onclick = () => {
       hide("welcome");
@@ -557,7 +561,6 @@
       hide("committees");
       show("welcome");
     };
-
     // Payment tabs
     $("bankTab").onclick = () => {
       $("bankTab").classList.add("active");
@@ -571,7 +574,6 @@
       $("bkashBox").classList.remove("hidden");
       $("bankBox").classList.add("hidden");
     };
-
     // Toggle password
     $("togglePass").onclick = () => {
       const p = $("pass");
@@ -583,7 +585,6 @@
         $("togglePass").textContent = "👁";
       }
     };
-
     // Render to member card
     function renderRow(row) {
       $("v_code").textContent = row["1_ CODE"] ?? "";
@@ -594,13 +595,11 @@
       $("v_pay").textContent = row["6_TOTAL PAY"] ?? "";
       $("issuedAt").textContent = "ইস্যু করা: " + (new Date()).toLocaleString('bn-BD');
     }
-
     // Login
     function say(t, ok = false) {
       $("msg").textContent = t;
       $("msg").className = "msg " + (ok ? "ok" : "err");
     }
-
     async function doLogin() {
       say("");
       hide("result");
@@ -646,13 +645,11 @@
     $("code").addEventListener("keydown", e => {
       if (e.key === "Enter") doLogin();
     });
-
     // Logout
     $("logout").onclick = () => {
       hide("result");
       show("login");
     };
-
     // PDF Download (html2canvas + jsPDF) — UPDATED for clear, exact print
     $("downloadPdf").onclick = async () => {
       const { jsPDF } = window.jspdf;
@@ -660,15 +657,13 @@
       try {
         // Use the card color behind the semi-transparent gradient so it matches on-screen look
         const bgCol = getComputedStyle(document.documentElement).getPropertyValue('--card')?.trim() || '#0f2a41';
-
         const canvas = await html2canvas(cardEl, {
           scale: Math.max(3, Math.ceil(window.devicePixelRatio || 1) * 2), // high-res
           useCORS: true,
           imageTimeout: 15000,
-          backgroundColor: bgCol,  // ensures dark card background, not white
+          backgroundColor: bgCol, // ensures dark card background, not white
           logging: false
         });
-
         const imgData = canvas.toDataURL("image/png");
         // Make the PDF exactly the same size as the rendered card to avoid stretching/blurring
         const pdf = new jsPDF({
@@ -676,7 +671,6 @@
           unit: 'px',
           format: [canvas.width, canvas.height]
         });
-
         pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
         pdf.save("member_card.pdf");
       } catch (err) {
