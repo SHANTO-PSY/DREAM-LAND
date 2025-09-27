@@ -241,7 +241,8 @@
       content: "";
       position: absolute;
       inset: 0;
-      background-image: var(--logo-uri); /* embedded SVG logo as watermark */
+      background-image: var(--logo-uri);
+      /* embedded SVG logo as watermark */
       background-repeat: no-repeat;
       background-position: center;
       background-size: 260px;
@@ -313,9 +314,8 @@
 
   <div id="welcome" class="card">
     <!-- embedded logo image (no external file) -->
-    <img class="logo" alt="Logo"
-         src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 110'><path d='M10,78 Q110,98 210,78' fill='none' stroke='%2322C55E' stroke-width='6' stroke-linecap='round'/><path d='M70 74 L110 46 L150 74' fill='none' stroke='%2322D3EE' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/><rect x='107' y='70' width='12' height='18' rx='2' fill='%230F172A' stroke='%2322D3EE' stroke-width='2'/><circle cx='180' cy='28' r='10' fill='%23FACC15'/><path d='M54 80 v18' stroke='%2378350F' stroke-width='4' stroke-linecap='round'/><circle cx='54' cy='72' r='10' fill='%2322C55E'/></svg>" />
-    <h1>স্বাগতম!</h1>
+    <img class="logo" alt="Logo" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 110'><path d='M10,78 Q110,98 210,78' fill='none' stroke='%2322C55E' stroke-width='6' stroke-linecap='round'/><path d='M70 74 L110 46 L150 74' fill='none' stroke='%2322D3EE' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/><rect x='107' y='70' width='12' height='18' rx='2' fill='%230F172A' stroke='%2322D3EE' stroke-width='2'/><circle cx='180' cy='28' r='10' fill='%23FACC15'/><path d='M54 80 v18' stroke='%2378350F' stroke-width='4' stroke-linecap='round'/><circle cx='54' cy='72' r='10' fill='%2322C55E'/></svg>" />
+    <h1>আসসালামু আলাইকুম</h1>
     <p class="article">“স্বপ্ন নীড় সোসাইটি”-তে আপনাকে আন্তরিক স্বাগতম 🌸</p>
 
     <div class="grid-btn">
@@ -449,8 +449,7 @@
     <div id="memberCard">
       <div class="mc-top">
         <!-- embedded logo image (no external file) -->
-        <img alt="Logo" class="mc-logo"
-             src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 110'><path d='M10,78 Q110,98 210,78' fill='none' stroke='%2322C55E' stroke-width='6' stroke-linecap='round'/><path d='M70 74 L110 46 L150 74' fill='none' stroke='%2322D3EE' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/><rect x='107' y='70' width='12' height='18' rx='2' fill='%230F172A' stroke='%2322D3EE' stroke-width='2'/><circle cx='180' cy='28' r='10' fill='%23FACC15'/><path d='M54 80 v18' stroke='%2378350F' stroke-width='4' stroke-linecap='round'/><circle cx='54' cy='72' r='10' fill='%2322C55E'/></svg>" />
+        <img alt="Logo" class="mc-logo" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 110'><path d='M10,78 Q110,98 210,78' fill='none' stroke='%2322C55E' stroke-width='6' stroke-linecap='round'/><path d='M70 74 L110 46 L150 74' fill='none' stroke='%2322D3EE' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/><rect x='107' y='70' width='12' height='18' rx='2' fill='%230F172A' stroke='%2322D3EE' stroke-width='2'/><circle cx='180' cy='28' r='10' fill='%23FACC15'/><path d='M54 80 v18' stroke='%2378350F' stroke-width='4' stroke-linecap='round'/><circle cx='54' cy='72' r='10' fill='%2322C55E'/></svg>" />
         <div class="mc-title">
           <div style="font-size:16px;font-weight:800;">স্বপ্ন নীড় সোসাইটি</div>
           <div style="font-size:13px;font-weight:600;opacity:0.95;">মেম্বার কার্ড</div>
@@ -497,9 +496,10 @@
   <div id="committees" class="card hidden">
     <h2>আমাদের কমিটি</h2>
     <ul>
-      <li>সভাপতি: জনাব </li>
-      <li>সাধারণ সম্পাদক: জনাব </li>
-      <li>কোষাধ্যক্ষ: জনাব </li>
+      <li>উপদেষ্টা: জনাব মোঃ সাইফুল ইসলাম </li>
+      <li>সভাপতি:  জনাব মোঃ কায়েস </li>
+      <li>সাধারণ সম্পাদক: জনাব মোঃ রনি হোসেন রাব্বি </li>
+      <li>কোষাধ্যক্ষ: জনাব মোঃ রুবেল হোসেন </li>
     </ul>
     <span class="link" id="backHome3">← হোমে ফিরুন</span>
     <div class="help">Contact: <a href="mailto:saiful.shanto1122@gmail.com">saiful.shanto1122@gmail.com</a> | WhatsApp:
@@ -652,7 +652,9 @@
     };
     // PDF Download (html2canvas + jsPDF) — UPDATED for clear, exact print
     $("downloadPdf").onclick = async () => {
-      const { jsPDF } = window.jspdf;
+      const {
+        jsPDF
+      } = window.jspdf;
       const cardEl = $("memberCard");
       try {
         // Use the card color behind the semi-transparent gradient so it matches on-screen look
